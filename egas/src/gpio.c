@@ -8,7 +8,7 @@
 #include "em_gpio.h"
 #include "em_cmu.h"
 
-void gpioInit()
+void EGAS_GPIO_Init()
 {
   // Enable clock
   CMU_ClockEnable(cmuClock_GPIO, true);

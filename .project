@@ -61,6 +61,11 @@
 			<locationURI>STUDIO_SDK_LOC/platform/common/src/sl_syscalls.c</locationURI>
 		</link>
 		<link>
+			<name>gecko_sdk_4.4.6/platform/emlib/inc/em_adc.h</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/platform/emlib/inc/em_adc.h</locationURI>
+		</link>
+		<link>
 			<name>gecko_sdk_4.4.6/platform/emlib/inc/em_assert.h</name>
 			<type>1</type>
 			<locationURI>STUDIO_SDK_LOC/platform/emlib/inc/em_assert.h</locationURI>
@@ -136,6 +141,11 @@
 			<locationURI>STUDIO_SDK_LOC/platform/emlib/inc/em_system_generic.h</locationURI>
 		</link>
 		<link>
+			<name>gecko_sdk_4.4.6/platform/emlib/inc/em_usart.h</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/platform/emlib/inc/em_usart.h</locationURI>
+		</link>
+		<link>
 			<name>gecko_sdk_4.4.6/platform/emlib/inc/em_version.h</name>
 			<type>1</type>
 			<locationURI>STUDIO_SDK_LOC/platform/emlib/inc/em_version.h</locationURI>
@@ -144,6 +154,11 @@
 			<name>gecko_sdk_4.4.6/platform/emlib/inc/sli_em_cmu.h</name>
 			<type>1</type>
 			<locationURI>STUDIO_SDK_LOC/platform/emlib/inc/sli_em_cmu.h</locationURI>
+		</link>
+		<link>
+			<name>gecko_sdk_4.4.6/platform/emlib/src/em_adc.c</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/platform/emlib/src/em_adc.c</locationURI>
 		</link>
 		<link>
 			<name>gecko_sdk_4.4.6/platform/emlib/src/em_cmu.c</name>
@@ -174,6 +189,11 @@
 			<name>gecko_sdk_4.4.6/platform/emlib/src/em_system.c</name>
 			<type>1</type>
 			<locationURI>STUDIO_SDK_LOC/platform/emlib/src/em_system.c</locationURI>
+		</link>
+		<link>
+			<name>gecko_sdk_4.4.6/platform/emlib/src/em_usart.c</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/platform/emlib/src/em_usart.c</locationURI>
 		</link>
 		<link>
 			<name>gecko_sdk_4.4.6/platform/CMSIS/Core/Include/cmsis_compiler.h</name>

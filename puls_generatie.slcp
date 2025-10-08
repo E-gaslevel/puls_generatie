@@ -28,6 +28,8 @@ toolchain_settings: []
 component:
 - {id: BGM13P32F512GA}
 - {id: device_init}
+- {id: emlib_adc}
+- {id: emlib_usart}
 - {id: sl_system}
 define:
 - {name: DEBUG_EFM}

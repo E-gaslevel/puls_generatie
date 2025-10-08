@@ -8,7 +8,9 @@
 #ifndef USART_H
 #define USART_H
 
-void uartInit();
-void sendUART(uint16_t *_data, int size);
+#include <stdint.h>
+
+void EGAS_UART_Init();
+void EGAS_UART_Send(uint16_t *_data, int size);
 
 #endif /* USART_H */

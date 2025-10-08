@@ -14,7 +14,7 @@
 const uint16_t BAUDRATE = 9600;
 
 
-void uartInit()
+void EGAS_UART_Init()
 {
   // Enable clock
   CMU_ClockEnable(cmuClock_USART0, true);
@@ -33,7 +33,7 @@ void uartInit()
                         | USART_ROUTELOC0_RXLOC_LOC12;
 }
 
-void sendUART(uint16_t *_data, int size)
+void EGAS_UART_Send(uint16_t *_data, int size)
 {
   char buffer[16];
   for (int i = 0; i < size; i++) {

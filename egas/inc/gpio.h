@@ -8,6 +8,6 @@
 #ifndef GPIO_H
 #define GPIO_H
 
-void gpioInit();
+void EGAS_GPIO_Init();
 
 #endif /* INC_GPIO_H_ */
