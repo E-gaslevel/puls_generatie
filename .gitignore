@@ -30,6 +30,7 @@ image/
 
 # Other
 Thumbs.db
+.DS_Store
 
 # maybe
 .pdm/
