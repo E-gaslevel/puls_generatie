@@ -1,0 +1,39 @@
+# Simplicity studio build directories
+Debug/
+Release/
+build/
+/RemoteSystemsTempFiles/
+image/
+*.launch
+*.o
+*.elf
+*.bin
+*.hex
+
+# Simplicity studio metadata
+.metadata/
+
+# IDE-specific files
+.settings/
+*.bat
+*.py
+*.sh
+
+*.lib
+*.exe
+
+# Logs and temp files
+*.log
+*.tmp
+*.bak
+~*
+
+# Other
+Thumbs.db
+
+# maybe
+.pdm/
+gecko_sdk_4.4.6/
+GNU ARM v12.2.1 - Default/
+.projectlinkstore
+readme.md
