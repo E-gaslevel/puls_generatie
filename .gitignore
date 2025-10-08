@@ -34,6 +34,6 @@ Thumbs.db
 # maybe
 .pdm/
 gecko_sdk_4.4.6/
-GNU ARM v12.2.1 - Default/
+GNU ARM v12.2.1*/
 .projectlinkstore
 readme.md
