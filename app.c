@@ -24,11 +24,11 @@
 #include "gpio.h"
 #include "usart.h"
 
+uint16_t buffer[5000]; // gebruik buffer buiten stack
+
 void app_init(void)
 {
   EGAS_ADC_Init();
-
-  uint16_t buffer[500];
   EGAS_ADC_Measure(buffer, sizeof(buffer) / sizeof(uint16_t));
 
   EGAS_GPIO_Init();
