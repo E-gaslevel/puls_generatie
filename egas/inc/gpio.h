@@ -1,12 +1,16 @@
 /*
  * gpio.h
  *
- *  Created on: 3 paź 2025
+ *  Created on: 3 oct 2025
  *      Author: krzys
  */
 
 #ifndef GPIO_H
 #define GPIO_H
+
+#include "em_cmu.h"
+#include "em_gpio.h"
+
 
 void EGAS_GPIO_Init();
 

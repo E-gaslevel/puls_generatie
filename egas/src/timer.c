@@ -5,10 +5,7 @@
  *      Author: krzys
  */
 
-#include "em_cmu.h"
-#include "gpio.h"
-#include "em_timer.h"
-#include "em_prs.h"
+#include "timer.h"
 
 #define PWM_FREQ        1000000    // 1 MHz
 #define PWM_DUTY_CYCLE  50         // 50%

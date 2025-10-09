@@ -5,8 +5,7 @@
  *      Author: krzysztof
  */
 
-#include "em_gpio.h"
-#include "em_cmu.h"
+#include "gpio.h"
 
 void EGAS_GPIO_Init()
 {

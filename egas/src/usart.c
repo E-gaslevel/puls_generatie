@@ -1,14 +1,10 @@
 /*
  * usart.c
  *
- *  Created on: 3 paź 2025
+ *  Created on: 3 oct 2025
  *      Author: krzys
  */
 
-#include <stdio.h>
-
-#include "em_usart.h"
-#include "em_cmu.h"
 #include "usart.h"
 
 const uint16_t BAUDRATE = 9600;

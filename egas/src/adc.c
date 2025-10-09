@@ -6,8 +6,6 @@
  */
 
 #include "adc.h"
-#include "em_adc.h"
-#include "em_cmu.h"
 
 void EGAS_ADC_Init(void) {
 
