@@ -2,7 +2,7 @@
  * adc.h
  *
  *  Created on: 25 sep 2025
- *      Author: bossie
+ *      Author: Dave Bosman
  */
 
 #ifndef INC_ADC_H_

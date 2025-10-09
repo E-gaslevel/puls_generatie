@@ -5,3 +5,5 @@ sl_device_init_emu_config.h=-1292589747
 sl_device_init_hfxo_config.h=-1398298275
 sl_device_init_lfxo_config.h=88411528
 sl_memory_config.h=687128566
+sl_power_manager_config.h=-1985446573
+sl_sleeptimer_config.h=847044378

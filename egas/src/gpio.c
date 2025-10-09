@@ -5,6 +5,7 @@
  *      Author: krzysztof
  */
 
+#include "gpio.h"
 #include "em_gpio.h"
 #include "em_cmu.h"
 
@@ -16,6 +17,9 @@ void EGAS_GPIO_Init()
   // Set Pinmode needed for RX, TX
   GPIO_PinModeSet(gpioPortC, 8, gpioModePushPull, 0); //RX
   GPIO_PinModeSet(gpioPortC, 9, gpioModePushPull, 0); //TX
-}
+
+  // Set pinmode for PWM
+  GPIO_PinModeSet(gpioPortC, 10, gpioModePushPull, 0);
+  }
 
 
