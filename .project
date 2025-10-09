@@ -126,6 +126,11 @@
 			<locationURI>STUDIO_SDK_LOC/platform/emlib/inc/em_msc_compat.h</locationURI>
 		</link>
 		<link>
+			<name>gecko_sdk_4.4.6/platform/emlib/inc/em_prs.h</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/platform/emlib/inc/em_prs.h</locationURI>
+		</link>
+		<link>
 			<name>gecko_sdk_4.4.6/platform/emlib/inc/em_ramfunc.h</name>
 			<type>1</type>
 			<locationURI>STUDIO_SDK_LOC/platform/emlib/inc/em_ramfunc.h</locationURI>
@@ -139,6 +144,11 @@
 			<name>gecko_sdk_4.4.6/platform/emlib/inc/em_system_generic.h</name>
 			<type>1</type>
 			<locationURI>STUDIO_SDK_LOC/platform/emlib/inc/em_system_generic.h</locationURI>
+		</link>
+		<link>
+			<name>gecko_sdk_4.4.6/platform/emlib/inc/em_timer.h</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/platform/emlib/inc/em_timer.h</locationURI>
 		</link>
 		<link>
 			<name>gecko_sdk_4.4.6/platform/emlib/inc/em_usart.h</name>
@@ -186,9 +196,19 @@
 			<locationURI>STUDIO_SDK_LOC/platform/emlib/src/em_msc.c</locationURI>
 		</link>
 		<link>
+			<name>gecko_sdk_4.4.6/platform/emlib/src/em_prs.c</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/platform/emlib/src/em_prs.c</locationURI>
+		</link>
+		<link>
 			<name>gecko_sdk_4.4.6/platform/emlib/src/em_system.c</name>
 			<type>1</type>
 			<locationURI>STUDIO_SDK_LOC/platform/emlib/src/em_system.c</locationURI>
+		</link>
+		<link>
+			<name>gecko_sdk_4.4.6/platform/emlib/src/em_timer.c</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/platform/emlib/src/em_timer.c</locationURI>
 		</link>
 		<link>
 			<name>gecko_sdk_4.4.6/platform/emlib/src/em_usart.c</name>
