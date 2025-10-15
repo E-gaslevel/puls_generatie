@@ -9,45 +9,78 @@
 
 #define PWM_FREQ        1000000    // 1 MHz
 #define PWM_DUTY_CYCLE  50         // 50%
-#define START_DELAY_MS  500        // 500 ms delay before PWM starts
+#define N_PULSES        4
 
-void initTimersPWM(void)
+uint32_t topValue;
+
+void TIMER1_IRQHandler(void)
 {
-    // -------------------------
-    // Enable clocks
-    // -------------------------
-    //CMU_ClockEnable(cmuClock_GPIO,  true);
-    //CMU_ClockEnable(cmuClock_TIMER0, true);
-    CMU_ClockEnable(cmuClock_TIMER1, true);
-    //CMU_ClockEnable(cmuClock_PRS,   true);
+  TIMER_IntClear(TIMER1, TIMER_IF_CC0);
+  TIMER0->CMD = TIMER_CMD_STOP;
+  TIMER1->CMD = TIMER_CMD_STOP;
+}
 
-    // -------------------------
-    // TIMER0 PWM output (PA0)
-    // -------------------------
-    GPIO_PinModeSet(gpioPortC, 10, gpioModePushPull, 0);
-    TIMER1->ROUTELOC0 = TIMER_ROUTELOC0_CC0LOC_LOC15; // check datasheet for correct LOC
-    TIMER1->ROUTEPEN  = TIMER_ROUTEPEN_CC0PEN;
+void EGAS_PWM_Init(void)
+{
+  // -----------------------------
+  // Clock setup
+  // -----------------------------
+  CMU_ClockEnable(cmuClock_TIMER0, true);
+  CMU_ClockEnable(cmuClock_TIMER1, true);
 
-    // -------------------------
-    // Configure TIMER0 for PWM
-    // -------------------------
-    uint32_t timer0Freq = CMU_ClockFreqGet(cmuClock_TIMER1);
-    uint32_t topValue   = (timer0Freq / PWM_FREQ) - 1;
-    uint32_t compValue  = ((topValue + 1) * PWM_DUTY_CYCLE) / 100;
+  // -----------------------------
+  // TIMER0 — PWM Generator
+  // -----------------------------
+  TIMER_Init_TypeDef t0Init = TIMER_INIT_DEFAULT;
+  t0Init.enable = false;
+  t0Init.prescale = timerPrescale1;
+  t0Init.mode = timerModeUp;
+  TIMER_Init(TIMER0, &t0Init);
 
-    TIMER_InitCC_TypeDef timerCCInit = TIMER_INITCC_DEFAULT;
-    timerCCInit.mode = timerCCModePWM;
-    TIMER_InitCC(TIMER1, 0, &timerCCInit);
+  // Compute TOP for 1 MHz frequency
+  uint32_t hfperFreq = CMU_ClockFreqGet(cmuClock_TIMER0);
+  uint32_t topValue = hfperFreq / PWM_FREQ - 1;
+  TIMER_TopSet(TIMER0, topValue);
 
-    TIMER_TopBufSet(TIMER1, topValue);
-    TIMER_CompareBufSet(TIMER1, 0, compValue);
+  // PWM duty cycle using CC0
+  TIMER_InitCC_TypeDef t0ccInit = TIMER_INITCC_DEFAULT;
+  t0ccInit.mode = timerCCModePWM;
+  TIMER_InitCC(TIMER0, 0, &t0ccInit);
+  TIMER_CompareSet(TIMER0, 0, (topValue * PWM_DUTY_CYCLE) / 100);
 
-    TIMER_Init_TypeDef timer1Init = TIMER_INIT_DEFAULT;
-    //timer0Init.oneShot = true;   // one-shot: stops automatically at TOP
-    timer1Init.enable  = true;
-    TIMER_Init(TIMER1, &timer1Init);
+  TIMER0->ROUTELOC0 = TIMER_ROUTELOC0_CC0LOC_LOC15; // Check datasheet for correct LOC
+  TIMER0->ROUTEPEN  = TIMER_ROUTEPEN_CC0PEN;
 
-    TIMER_Enable(TIMER0, true);
+  // -----------------------------
+  // TIMER1 — Pulse Counter
+  // -----------------------------
+  // Configure compare to detect desired pulse count
+  TIMER_InitCC_TypeDef t1ccInit = TIMER_INITCC_DEFAULT;
+  t1ccInit.mode = timerCCModeCompare;
+  TIMER_InitCC(TIMER1, 0, &t1ccInit);
+
+  TIMER_Init_TypeDef t1Init = TIMER_INIT_DEFAULT;
+  t1Init.enable = false;
+  t1Init.prescale = timerPrescale1;
+  t1Init.mode = timerModeUp;
+  TIMER_Init(TIMER1, &t1Init);
+
+  // Enable compare interrupt
+  TIMER_IntEnable(TIMER1, TIMER_IEN_CC0);
+  NVIC_EnableIRQ(TIMER1_IRQn);
+
+  // Check N_PULSES, if one, small compare value because will overshoot and send 2 pulses
+    if (N_PULSES < 0) return; // Wrong value
+    else if (N_PULSES == 1) TIMER_CompareSet(TIMER1, 0, topValue-10);
+    else TIMER_CompareSet(TIMER1, 0, (topValue * N_PULSES)-10);
+
+  // -----------------------------
+  // Start timers
+  // -----------------------------
+
+  // Start both at (almost) the same time
+  TIMER0->CMD = TIMER_CMD_START;
+  TIMER1->CMD = TIMER_CMD_START;
 }
 
 

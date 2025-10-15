@@ -20,10 +20,8 @@
  ******************************************************************************/
 
 #include <stdint.h>
-#include "adc.h"
-#include "gpio.h"
-#include "usart.h"
-#include "timer.h"
+
+#include "app.h"
 
 uint16_t buffer[5000]; // gebruik buffer buiten stack
 
@@ -34,7 +32,8 @@ void app_init(void)
 
   EGAS_GPIO_Init();
 
-  initTimersPWM();
+  EGAS_PWM_Init();
+  //EGAS_PWM_Start();
   //EGAS_UART_Init();
   //EGAS_UART_Send(buffer, sizeof(buffer) / sizeof(uint16_t));
 }

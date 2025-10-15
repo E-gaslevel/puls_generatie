@@ -10,9 +10,12 @@
 
 #include "em_cmu.h"
 #include "em_timer.h"
+#include "em_device.h"
 
 #include "gpio.h"
 
-void initTimersPWM();
+void TIMER1_IRQHandler(void);
+void EGAS_PWM_Init(void);
+void EGAS_PWM_Start(void);
 
 #endif /* EGAS_INC_TIMER_H_ */

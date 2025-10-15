@@ -18,6 +18,11 @@
 #ifndef APP_H
 #define APP_H
 
+#include "adc.h"
+#include "gpio.h"
+#include "usart.h"
+#include "timer.h"
+
 /***************************************************************************//**
  * Initialize application.
  ******************************************************************************/
