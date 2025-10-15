@@ -7,9 +7,9 @@
 
 #include "timer.h"
 
-#define PWM_FREQ        1000000    // 1 MHz
-#define PWM_DUTY_CYCLE  50           // 50%
-#define N_PULSES        5
+#define PWM_FREQ        50000    // 1 MHz
+#define PWM_DUTY_CYCLE  100           // 50%
+#define N_PULSES        1
 
 // ----------------------------------------------------------------
 // This function sets two timers to send a specific amount of pwm pulses with a given frequency and duty cycle
