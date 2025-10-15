@@ -9,7 +9,7 @@
 
 #define PWM_FREQ        1000000    // 1 MHz
 #define PWM_DUTY_CYCLE  50         // 50%
-#define N_PULSES        4
+#define N_PULSES        1
 
 uint32_t topValue;
 
@@ -35,6 +35,7 @@ void EGAS_PWM_Init(void)
   t0Init.enable = false;
   t0Init.prescale = timerPrescale1;
   t0Init.mode = timerModeUp;
+  t0Init.sync = true;
   TIMER_Init(TIMER0, &t0Init);
 
   // Compute TOP for 1 MHz frequency
@@ -71,7 +72,6 @@ void EGAS_PWM_Init(void)
 
   // Check N_PULSES, if one, small compare value because will overshoot and send 2 pulses
     if (N_PULSES < 0) return; // Wrong value
-    else if (N_PULSES == 1) TIMER_CompareSet(TIMER1, 0, topValue-10);
     else TIMER_CompareSet(TIMER1, 0, (topValue * N_PULSES)-10);
 
   // -----------------------------
@@ -79,8 +79,9 @@ void EGAS_PWM_Init(void)
   // -----------------------------
 
   // Start both at (almost) the same time
-  TIMER0->CMD = TIMER_CMD_START;
+  //TIMER0->CMD = TIMER_CMD_START;
   TIMER1->CMD = TIMER_CMD_START;
+
 }
 
 
