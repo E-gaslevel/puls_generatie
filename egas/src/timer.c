@@ -7,9 +7,9 @@
 
 #include "timer.h"
 
-#define PWM_FREQ        1000000    // 1 MHz
-#define PWM_DUTY_CYCLE  50         // 50%
-#define N_PULSES        4
+#define PWM_FREQ        5000    // 1 MHz
+#define PWM_DUTY_CYCLE  75         // 50%
+#define N_PULSES        2
 
 uint32_t topValue;
 
@@ -45,11 +45,12 @@ void EGAS_PWM_Init(void)
   // PWM duty cycle using CC0
   TIMER_InitCC_TypeDef t0ccInit = TIMER_INITCC_DEFAULT;
   t0ccInit.mode = timerCCModePWM;
+  t0ccInit.outInvert = true;
   TIMER_InitCC(TIMER0, 0, &t0ccInit);
   TIMER_CompareSet(TIMER0, 0, (topValue * PWM_DUTY_CYCLE) / 100);
 
-  TIMER0->ROUTELOC0 = TIMER_ROUTELOC0_CC0LOC_LOC15; // Check datasheet for correct LOC
-  TIMER0->ROUTEPEN  = TIMER_ROUTEPEN_CC0PEN;
+  TIMER0->ROUTELOC0 |=  TIMER_ROUTELOC0_CC0LOC_LOC22;
+  TIMER0->ROUTEPEN |= TIMER_ROUTEPEN_CC0PEN;
 
   // -----------------------------
   // TIMER1 — Pulse Counter
@@ -71,8 +72,8 @@ void EGAS_PWM_Init(void)
 
   // Check N_PULSES, if one, small compare value because will overshoot and send 2 pulses
     if (N_PULSES < 0) return; // Wrong value
-    else if (N_PULSES == 1) TIMER_CompareSet(TIMER1, 0, topValue-10);
-    else TIMER_CompareSet(TIMER1, 0, (topValue * N_PULSES)-10);
+    else if (N_PULSES == 1) TIMER_CompareSet(TIMER1, 0, topValue);
+    else TIMER_CompareSet(TIMER1, 0, (topValue * N_PULSES));
 
   // -----------------------------
   // Start timers
