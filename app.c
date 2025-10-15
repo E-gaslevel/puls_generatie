@@ -29,13 +29,9 @@ void app_init(void)
 {
   EGAS_GPIO_Init();
   EGAS_ADC_Init();
-<<<<<<< HEAD
   EGAS_ADC_Measure(buffer, sizeof(buffer) / sizeof(uint16_t));
-=======
->>>>>>> 781754b18fd20534e5efedade509c2c366452f74
   EGAS_PWM_Init();
-  EGAS_ADC_Measure(buffer, sizeof(buffer) / sizeof(uint16_t));
-while(1);
+  while(1);
 
   //EGAS_PWM_Start();
   EGAS_UART_Init();

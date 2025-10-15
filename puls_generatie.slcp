@@ -27,6 +27,7 @@ sdk: {id: gecko_sdk, version: 4.4.6}
 toolchain_settings: []
 component:
 - {id: BGM13P32F512GA}
+- {id: bootloader_delay_driver}
 - {id: device_init}
 - {id: emlib_adc}
 - {id: emlib_prs}
