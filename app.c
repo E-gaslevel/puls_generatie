@@ -31,9 +31,12 @@ void app_init(void)
   EGAS_ADC_Init();
   EGAS_ADC_Measure(buffer, sizeof(buffer) / sizeof(uint16_t));
   EGAS_PWM_Init();
-  while(1);
+  while(1)
+    {
+      EGAS_PWM_Start(1000000, 50, 100); //confirm block golf!
+      for(int i = 0; i < 500000; i++);
+    }
 
-  //EGAS_PWM_Start();
   EGAS_UART_Init();
   EGAS_UART_Send(buffer, sizeof(buffer) / sizeof(uint16_t));
 }
