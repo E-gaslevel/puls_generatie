@@ -8,18 +8,18 @@
 #include "timer.h"
 
 #define PWM_FREQ        1000000    // 1 MHz
-#define PWM_DUTY_CYCLE  50         // 50%
-#define N_PULSES        1
+#define PWM_DUTY_CYCLE  50           // 50%
+#define N_PULSES        5
 
-uint32_t topValue;
-
-void TIMER1_IRQHandler(void)
-{
-  TIMER_IntClear(TIMER1, TIMER_IF_CC0);
-  TIMER0->CMD = TIMER_CMD_STOP;
-  TIMER1->CMD = TIMER_CMD_STOP;
-}
-
+// ----------------------------------------------------------------
+// This function sets two timers to send a specific amount of pwm pulses with a given frequency and duty cycle
+// TIMER0 generates PWM signal, topvalue is amount of clockcyckles ran at specific rate, for 1 Mhz it's 37 clockcycles.
+// Compare set is used to set a duty cycle
+// TIMER0 is synced, so TIMER1 can start and stop it
+//
+// TIMER1 doesn't use CC, because it works in oneShot mode.
+// TIMER1 will start both timers, count to its topvalue and stop both timers, without CPU.
+// -----------------------------------------------------------------
 void EGAS_PWM_Init(void)
 {
   // -----------------------------
@@ -38,7 +38,6 @@ void EGAS_PWM_Init(void)
   t0Init.sync = true;
   TIMER_Init(TIMER0, &t0Init);
 
-  // Compute TOP for 1 MHz frequency
   uint32_t hfperFreq = CMU_ClockFreqGet(cmuClock_TIMER0);
   uint32_t topValue = hfperFreq / PWM_FREQ - 1;
   TIMER_TopSet(TIMER0, topValue);
@@ -49,39 +48,18 @@ void EGAS_PWM_Init(void)
   TIMER_InitCC(TIMER0, 0, &t0ccInit);
   TIMER_CompareSet(TIMER0, 0, (topValue * PWM_DUTY_CYCLE) / 100);
 
-  TIMER0->ROUTELOC0 = TIMER_ROUTELOC0_CC0LOC_LOC15; // Check datasheet for correct LOC
+  TIMER0->ROUTELOC0 = TIMER_ROUTELOC0_CC0LOC_LOC15; // PC10
   TIMER0->ROUTEPEN  = TIMER_ROUTEPEN_CC0PEN;
-
-  // -----------------------------
-  // TIMER1 — Pulse Counter
-  // -----------------------------
-  // Configure compare to detect desired pulse count
-  TIMER_InitCC_TypeDef t1ccInit = TIMER_INITCC_DEFAULT;
-  t1ccInit.mode = timerCCModeCompare;
-  TIMER_InitCC(TIMER1, 0, &t1ccInit);
 
   TIMER_Init_TypeDef t1Init = TIMER_INIT_DEFAULT;
   t1Init.enable = false;
   t1Init.prescale = timerPrescale1;
   t1Init.mode = timerModeUp;
+  t1Init.oneShot = true;
   TIMER_Init(TIMER1, &t1Init);
+  TIMER_TopSet(TIMER1, topValue * (N_PULSES+1));
 
-  // Enable compare interrupt
-  TIMER_IntEnable(TIMER1, TIMER_IEN_CC0);
-  NVIC_EnableIRQ(TIMER1_IRQn);
-
-  // Check N_PULSES, if one, small compare value because will overshoot and send 2 pulses
-    if (N_PULSES < 0) return; // Wrong value
-    else TIMER_CompareSet(TIMER1, 0, (topValue * N_PULSES)-10);
-
-  // -----------------------------
-  // Start timers
-  // -----------------------------
-
-  // Start both at (almost) the same time
-  //TIMER0->CMD = TIMER_CMD_START;
   TIMER1->CMD = TIMER_CMD_START;
-
 }
 
 
