@@ -27,15 +27,13 @@ uint16_t buffer[5000]; // gebruik buffer buiten stack
 
 void app_init(void)
 {
+  EGAS_GPIO_Init();
   EGAS_ADC_Init();
   EGAS_ADC_Measure(buffer, sizeof(buffer) / sizeof(uint16_t));
-
-  EGAS_GPIO_Init();
-
   EGAS_PWM_Init();
   //EGAS_PWM_Start();
-  //EGAS_UART_Init();
-  //EGAS_UART_Send(buffer, sizeof(buffer) / sizeof(uint16_t));
+  EGAS_UART_Init();
+  EGAS_UART_Send(buffer, sizeof(buffer) / sizeof(uint16_t));
 }
 
 /***************************************************************************//**
