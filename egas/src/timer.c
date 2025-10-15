@@ -7,24 +7,9 @@
 
 #include "timer.h"
 
-<<<<<<< HEAD
 #define PWM_FREQ        1000000    // 1 MHz
 #define PWM_DUTY_CYCLE  50           // 50%
 #define N_PULSES        5
-=======
-#define PWM_FREQ        5000    // 1 MHz
-#define PWM_DUTY_CYCLE  75         // 50%
-#define N_PULSES        2
-
-uint32_t topValue;
-
-void TIMER1_IRQHandler(void)
-{
-  TIMER_IntClear(TIMER1, TIMER_IF_CC0);
-  TIMER0->CMD = TIMER_CMD_STOP;
-  TIMER1->CMD = TIMER_CMD_STOP;
-}
->>>>>>> tempbranch
 
 // ----------------------------------------------------------------
 // This function sets two timers to send a specific amount of pwm pulses with a given frequency and duty cycle
@@ -64,13 +49,8 @@ void EGAS_PWM_Init(void)
   TIMER_InitCC(TIMER0, 0, &t0ccInit);
   TIMER_CompareSet(TIMER0, 0, (topValue * PWM_DUTY_CYCLE) / 100);
 
-<<<<<<< HEAD
-  TIMER0->ROUTELOC0 = TIMER_ROUTELOC0_CC0LOC_LOC15; // PC10
-  TIMER0->ROUTEPEN  = TIMER_ROUTEPEN_CC0PEN;
-=======
   TIMER0->ROUTELOC0 |=  TIMER_ROUTELOC0_CC0LOC_LOC22;
   TIMER0->ROUTEPEN |= TIMER_ROUTEPEN_CC0PEN;
->>>>>>> tempbranch
 
   TIMER_Init_TypeDef t1Init = TIMER_INIT_DEFAULT;
   t1Init.enable = false;
@@ -80,24 +60,6 @@ void EGAS_PWM_Init(void)
   TIMER_Init(TIMER1, &t1Init);
   TIMER_TopSet(TIMER1, topValue * (N_PULSES+1));
 
-<<<<<<< HEAD
-=======
-  // Enable compare interrupt
-  TIMER_IntEnable(TIMER1, TIMER_IEN_CC0);
-  NVIC_EnableIRQ(TIMER1_IRQn);
-
-  // Check N_PULSES, if one, small compare value because will overshoot and send 2 pulses
-    if (N_PULSES < 0) return; // Wrong value
-    else if (N_PULSES == 1) TIMER_CompareSet(TIMER1, 0, topValue);
-    else TIMER_CompareSet(TIMER1, 0, (topValue * N_PULSES));
-
-  // -----------------------------
-  // Start timers
-  // -----------------------------
-
-  // Start both at (almost) the same time
-  TIMER0->CMD = TIMER_CMD_START;
->>>>>>> tempbranch
   TIMER1->CMD = TIMER_CMD_START;
 }
 
