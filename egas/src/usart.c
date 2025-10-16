@@ -7,7 +7,7 @@
 
 #include "usart.h"
 
-const uint16_t BAUDRATE = 9600;
+const uint32_t BAUDRATE = 115200;
 
 
 void EGAS_UART_Init()
