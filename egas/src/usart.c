@@ -29,6 +29,14 @@ void EGAS_UART_Init()
                         | USART_ROUTELOC0_RXLOC_LOC12;
 }
 
+void EGAS_UART_String(const char *str)
+{
+    for (const char *p = str; *p; ++p) {
+        while (!(USART0->STATUS & USART_STATUS_TXBL));  // wait for TX buffer empty
+        USART_Tx(USART0, *p);
+    }
+}
+
 void EGAS_UART_Send(uint16_t *_data, int size)
 {
   char buffer[16];
