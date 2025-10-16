@@ -40,15 +40,15 @@ void app_init(void)
   EGAS_UART_Init();
   while(1)
     {
-//      EGAS_PWM_Start(freq, dutycycle, pulses); //confirm block golf!
-//      EGAS_ADC_Measure(buffer, sizeof(buffer) / sizeof(buffer[0]));
-//      EGAS_UART_Send(buffer, sizeof(buffer) / sizeof(buffer[0]));
-      for(int i = 0; i < 5000000; i++);
-      snprintf(filename, sizeof(filename)/sizeof(filename[0]), "frequency: %lu dutycycle: %u pulses: %u\n\r",
-              (unsigned long)freq,
-              (unsigned int)dutycycle,
-              (unsigned int)pulses);
-      EGAS_UART_String(filename);
+      EGAS_PWM_Start(freq, dutycycle, pulses); //confirm block golf!
+      EGAS_ADC_Measure(buffer, sizeof(buffer) / sizeof(buffer[0]));
+      EGAS_UART_Send(buffer, sizeof(buffer) / sizeof(buffer[0]));
+//      for(int i = 0; i < 5000000; i++);
+//      snprintf(filename, sizeof(filename)/sizeof(filename[0]), "frequency: %lu dutycycle: %u pulses: %u\n\r",
+//              (unsigned long)freq,
+//              (unsigned int)dutycycle,
+//              (unsigned int)pulses);
+//      EGAS_UART_String(filename);
 
     }
 
