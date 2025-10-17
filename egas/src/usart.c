@@ -6,6 +6,8 @@
  */
 
 #include "usart.h"
+#include "string.h"
+#include "stdint.h"
 
 const uint32_t BAUDRATE = 115200;
 
@@ -43,4 +45,36 @@ void EGAS_UART_Send(uint16_t *_data, int size)
   // optional newline at the end
   while (!(USART0->STATUS & USART_STATUS_TXBL));
   USART_Tx(USART0, '\n');
+}
+
+void EGAS_UART_Receive_Params(uint32_t* params)
+{
+  char buffer[32];
+  uint8_t buffer_index = 0;
+  char incoming_byte;
+
+  uint32_t frequency, duty_cycle, n_pulses;
+
+  // Put whole message into string buffer, put \0 at the end
+  // No check needed for overflow etc, because length is predefined in the transceiver
+  while(1)
+  {
+    incoming_byte = USART_Rx(USART0);
+    if(incoming_byte != '\n')
+    {
+      buffer[buffer_index] = incoming_byte;
+      buffer_index++;
+    } else {
+      buffer[buffer_index] = '\0';
+      break;
+    }
+  }
+
+  int values_parsed = sscanf(buffer, "f%u" "d%u" "n%u", &frequency, &duty_cycle, &n_pulses);
+  if (values_parsed == 3)
+  {
+    params[0] = frequency;
+    params[1] = duty_cycle;
+    params[2] = n_pulses;
+  }
 }

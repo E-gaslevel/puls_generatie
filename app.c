@@ -24,21 +24,24 @@
 #include "app.h"
 
 uint16_t buffer[5000]; // gebruik buffer buiten stack
+uint32_t params[3];
+int counter = 0;
 
 void app_init(void)
 {
   EGAS_GPIO_Init();
   EGAS_ADC_Init();
-  EGAS_ADC_Measure(buffer, sizeof(buffer) / sizeof(uint16_t));
-  EGAS_PWM_Init();
-  while(1)
-    {
-      EGAS_PWM_Start(1000000, 50, 100); //confirm block golf!
-      for(int i = 0; i < 500000; i++);
-    }
-
   EGAS_UART_Init();
-  EGAS_UART_Send(buffer, sizeof(buffer) / sizeof(uint16_t));
+  EGAS_PWM_Init();
+  while(counter < 3)
+    {
+      EGAS_UART_Receive_Params(params);
+      EGAS_PWM_Start(params[0], params[1], params[2]); //confirm block golf!
+      EGAS_ADC_Measure(buffer, sizeof(buffer) / sizeof(uint16_t));
+      EGAS_UART_Send(buffer, sizeof(buffer) / sizeof(uint16_t));
+      for(int i = 0; i < 500000; i++);
+      counter++;
+    }
 }
 
 /***************************************************************************//**

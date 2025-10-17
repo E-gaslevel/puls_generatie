@@ -11,9 +11,6 @@
 #include "em_cmu.h"
 #include "em_gpio.h"
 
-
-void EGAS_GPIO_Init();
-
 #define PULSE_EN_PORT gpioPortA
 #define PULSE_EN_PIN 4
 #define OPAMP_EN_PORT gpioPortB
@@ -40,8 +37,6 @@ void EGAS_GPIO_Init();
 #define TX_PIN 9
 #define TX_LOCATION 14
 
-void gpio_init(void);
-void gpio_sleep(void);
-void gpio_wakeup(void);
+void EGAS_GPIO_Init();
 
 #endif
