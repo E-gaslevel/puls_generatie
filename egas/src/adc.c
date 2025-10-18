@@ -29,7 +29,7 @@ void EGAS_ADC_Init(void) {
   ADC_InitSingle_Struct.posSel          = adcPosSelAPORT1YCH21; // PF5
   ADC_InitSingle_Struct.prsEnable       = false;                // Don't start via Peripheral Reflex System
   ADC_InitSingle_Struct.prsSel          = false;                // Only relevant if prsEnable is on
-  ADC_InitSingle_Struct.reference       = adcRef1V25;           // 1,25V reference
+  ADC_InitSingle_Struct.reference       = adcRef2V5;            // 2,5V reference
   ADC_InitSingle_Struct.rep             = true;                 // Enable repeat mode
   ADC_InitSingle_Struct.resolution      = adcRes12Bit;          // Use 12 bit resolution (max)
   ADC_InitSingle_Struct.singleDmaEm2Wu  = false;                // Don't use DMA

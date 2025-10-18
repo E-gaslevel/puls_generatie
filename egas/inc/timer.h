@@ -14,7 +14,6 @@
 
 #include "gpio.h"
 
-void TIMER1_IRQHandler(void);
 void EGAS_PWM_Init(void);
 void EGAS_PWM_Start(uint32_t pwm_freq, uint8_t duty_cycle, uint8_t n_of_pulses);
 

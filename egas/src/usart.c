@@ -6,12 +6,12 @@
  */
 
 #include "usart.h"
-#include "string.h"
-#include "stdint.h"
 
 const uint32_t BAUDRATE = 115200;
 
-
+// ----------------------------------------------------------------
+// UART is initialized as USART0 using PC8 and PC9
+// -----------------------------------------------------------------
 void EGAS_UART_Init()
 {
   // Enable clock
@@ -31,6 +31,10 @@ void EGAS_UART_Init()
                         | USART_ROUTELOC0_RXLOC_LOC12;
 }
 
+// ----------------------------------------------------------------
+// This functions send full array with UART. All values are parsed to char and sent
+// At the end, \n is send to let other program now that the data transfer is finished
+// -----------------------------------------------------------------
 void EGAS_UART_Send(uint16_t *_data, int size)
 {
   char buffer[16];
@@ -42,11 +46,16 @@ void EGAS_UART_Send(uint16_t *_data, int size)
     }
   }
 
-  // optional newline at the end
   while (!(USART0->STATUS & USART_STATUS_TXBL));
   USART_Tx(USART0, '\n');
 }
 
+// ----------------------------------------------------------------
+// This function processes parameters received with UART
+// There is a blocking loop with a blocking USART_RX call which will wait for bytes
+// Every char will be stored in buffer
+// Then sscanf will put the variables from the string into variables, and then the array
+// -----------------------------------------------------------------
 void EGAS_UART_Receive_Params(uint32_t* params)
 {
   char buffer[32];
@@ -70,7 +79,7 @@ void EGAS_UART_Receive_Params(uint32_t* params)
     }
   }
 
-  int values_parsed = sscanf(buffer, "f%u" "d%u" "n%u", &frequency, &duty_cycle, &n_pulses);
+  int values_parsed = sscanf(buffer, "f%lu" "d%lu" "n%lu", &frequency, &duty_cycle, &n_pulses);
   if (values_parsed == 3)
   {
     params[0] = frequency;

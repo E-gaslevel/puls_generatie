@@ -51,6 +51,9 @@ void EGAS_PWM_Init(void)
   TIMER_Init(TIMER1, &t1Init);
 }
 
+// ----------------------------------------------------------------
+// This functions starts the PWM and other timer to make a pulse with given parameters
+// -----------------------------------------------------------------
 void EGAS_PWM_Start(uint32_t pwm_freq, uint8_t duty_cycle, uint8_t n_of_pulses)
 {
   uint32_t hfperFreq = CMU_ClockFreqGet(cmuClock_TIMER0);

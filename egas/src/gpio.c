@@ -2,7 +2,7 @@
  * gpio.c
  *
  *  Created on: 3 oct 2025
- *      Author: krzysztof
+ *      Author: krzys
  */
 
 #include "gpio.h"
@@ -14,7 +14,7 @@ void EGAS_GPIO_Init()
 
   // Set Pinmode needed for RX, TX
   GPIO_PinModeSet(RX_PORT, RX_PIN, gpioModeInput, 0);
-  GPIO_PinModeSet(TX_PIN, TX_PIN, gpioModePushPull, 0);
+  GPIO_PinModeSet(TX_PORT, TX_PIN, gpioModePushPull, 1);
 
   GPIO_PinModeSet(PULSE_EN_PORT, PULSE_EN_PIN, gpioModePushPull, 0);
   GPIO_PinModeSet(OPAMP_EN_PORT, OPAMP_EN_PIN, gpioModePushPull, 0);

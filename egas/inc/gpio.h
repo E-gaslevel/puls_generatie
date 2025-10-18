@@ -32,10 +32,8 @@
 
 #define RX_PORT gpioPortC
 #define RX_PIN 8
-#define RX_LOCATION 12
 #define TX_PORT gpioPortC
 #define TX_PIN 9
-#define TX_LOCATION 14
 
 void EGAS_GPIO_Init();
 
