@@ -31,6 +31,16 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>gecko_sdk_4.4.6/platform/bootloader/driver/btl_driver_delay.c</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/platform/bootloader/driver/btl_driver_delay.c</locationURI>
+		</link>
+		<link>
+			<name>gecko_sdk_4.4.6/platform/bootloader/driver/btl_driver_delay.h</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/platform/bootloader/driver/btl_driver_delay.h</locationURI>
+		</link>
+		<link>
 			<name>gecko_sdk_4.4.6/platform/common/inc/sl_assert.h</name>
 			<type>1</type>
 			<locationURI>STUDIO_SDK_LOC/platform/common/inc/sl_assert.h</locationURI>
@@ -59,6 +69,11 @@
 			<name>gecko_sdk_4.4.6/platform/common/src/sl_syscalls.c</name>
 			<type>1</type>
 			<locationURI>STUDIO_SDK_LOC/platform/common/src/sl_syscalls.c</locationURI>
+		</link>
+		<link>
+			<name>gecko_sdk_4.4.6/platform/emlib/inc/em_adc.h</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/platform/emlib/inc/em_adc.h</locationURI>
 		</link>
 		<link>
 			<name>gecko_sdk_4.4.6/platform/emlib/inc/em_assert.h</name>
@@ -121,6 +136,11 @@
 			<locationURI>STUDIO_SDK_LOC/platform/emlib/inc/em_msc_compat.h</locationURI>
 		</link>
 		<link>
+			<name>gecko_sdk_4.4.6/platform/emlib/inc/em_prs.h</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/platform/emlib/inc/em_prs.h</locationURI>
+		</link>
+		<link>
 			<name>gecko_sdk_4.4.6/platform/emlib/inc/em_ramfunc.h</name>
 			<type>1</type>
 			<locationURI>STUDIO_SDK_LOC/platform/emlib/inc/em_ramfunc.h</locationURI>
@@ -136,6 +156,16 @@
 			<locationURI>STUDIO_SDK_LOC/platform/emlib/inc/em_system_generic.h</locationURI>
 		</link>
 		<link>
+			<name>gecko_sdk_4.4.6/platform/emlib/inc/em_timer.h</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/platform/emlib/inc/em_timer.h</locationURI>
+		</link>
+		<link>
+			<name>gecko_sdk_4.4.6/platform/emlib/inc/em_usart.h</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/platform/emlib/inc/em_usart.h</locationURI>
+		</link>
+		<link>
 			<name>gecko_sdk_4.4.6/platform/emlib/inc/em_version.h</name>
 			<type>1</type>
 			<locationURI>STUDIO_SDK_LOC/platform/emlib/inc/em_version.h</locationURI>
@@ -144,6 +174,11 @@
 			<name>gecko_sdk_4.4.6/platform/emlib/inc/sli_em_cmu.h</name>
 			<type>1</type>
 			<locationURI>STUDIO_SDK_LOC/platform/emlib/inc/sli_em_cmu.h</locationURI>
+		</link>
+		<link>
+			<name>gecko_sdk_4.4.6/platform/emlib/src/em_adc.c</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/platform/emlib/src/em_adc.c</locationURI>
 		</link>
 		<link>
 			<name>gecko_sdk_4.4.6/platform/emlib/src/em_cmu.c</name>
@@ -171,9 +206,24 @@
 			<locationURI>STUDIO_SDK_LOC/platform/emlib/src/em_msc.c</locationURI>
 		</link>
 		<link>
+			<name>gecko_sdk_4.4.6/platform/emlib/src/em_prs.c</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/platform/emlib/src/em_prs.c</locationURI>
+		</link>
+		<link>
 			<name>gecko_sdk_4.4.6/platform/emlib/src/em_system.c</name>
 			<type>1</type>
 			<locationURI>STUDIO_SDK_LOC/platform/emlib/src/em_system.c</locationURI>
+		</link>
+		<link>
+			<name>gecko_sdk_4.4.6/platform/emlib/src/em_timer.c</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/platform/emlib/src/em_timer.c</locationURI>
+		</link>
+		<link>
+			<name>gecko_sdk_4.4.6/platform/emlib/src/em_usart.c</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/platform/emlib/src/em_usart.c</locationURI>
 		</link>
 		<link>
 			<name>gecko_sdk_4.4.6/platform/CMSIS/Core/Include/cmsis_compiler.h</name>
@@ -299,6 +349,21 @@
 			<name>gecko_sdk_4.4.6/platform/service/system/src/sl_system_process_action.c</name>
 			<type>1</type>
 			<locationURI>STUDIO_SDK_LOC/platform/service/system/src/sl_system_process_action.c</locationURI>
+		</link>
+		<link>
+			<name>gecko_sdk_4.4.6/platform/service/udelay/inc/sl_udelay.h</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/platform/service/udelay/inc/sl_udelay.h</locationURI>
+		</link>
+		<link>
+			<name>gecko_sdk_4.4.6/platform/service/udelay/src/sl_udelay.c</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/platform/service/udelay/src/sl_udelay.c</locationURI>
+		</link>
+		<link>
+			<name>gecko_sdk_4.4.6/platform/service/udelay/src/sl_udelay_armv6m_gcc.S</name>
+			<type>1</type>
+			<locationURI>STUDIO_SDK_LOC/platform/service/udelay/src/sl_udelay_armv6m_gcc.S</locationURI>
 		</link>
 		<link>
 			<name>gecko_sdk_4.4.6/platform/Device/SiliconLabs/BGM13/Include/bgm13_acmp.h</name>
