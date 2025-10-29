@@ -1,20 +1,18 @@
 /*
  * usart.c
  *
- *  Created on: 3 paź 2025
+ *  Created on: 3 oct 2025
  *      Author: krzys
  */
 
-#include <stdio.h>
-
-#include "em_usart.h"
-#include "em_cmu.h"
 #include "usart.h"
 
-const uint16_t BAUDRATE = 9600;
+const uint32_t BAUDRATE = 115200;
 
-
-void uartInit()
+// ----------------------------------------------------------------
+// UART is initialized as USART0 using PC8 and PC9
+// -----------------------------------------------------------------
+void EGAS_UART_Init()
 {
   // Enable clock
   CMU_ClockEnable(cmuClock_USART0, true);
@@ -33,7 +31,11 @@ void uartInit()
                         | USART_ROUTELOC0_RXLOC_LOC12;
 }
 
-void sendUART(uint16_t *_data, int size)
+// ----------------------------------------------------------------
+// This functions send full array with UART. All values are parsed to char and sent
+// At the end, \n is send to let other program now that the data transfer is finished
+// -----------------------------------------------------------------
+void EGAS_UART_Send(uint16_t *_data, int size)
 {
   char buffer[16];
   for (int i = 0; i < size; i++) {
@@ -44,7 +46,44 @@ void sendUART(uint16_t *_data, int size)
     }
   }
 
-  // optional newline at the end
   while (!(USART0->STATUS & USART_STATUS_TXBL));
   USART_Tx(USART0, '\n');
+}
+
+// ----------------------------------------------------------------
+// This function processes parameters received with UART
+// There is a blocking loop with a blocking USART_RX call which will wait for bytes
+// Every char will be stored in buffer
+// Then sscanf will put the variables from the string into variables, and then the array
+// -----------------------------------------------------------------
+void EGAS_UART_Receive_Params(uint32_t* params)
+{
+  char buffer[32];
+  uint8_t buffer_index = 0;
+  char incoming_byte;
+
+  uint32_t frequency, duty_cycle, n_pulses;
+
+  // Put whole message into string buffer, put \0 at the end
+  // No check needed for overflow etc, because length is predefined in the transceiver
+  while(1)
+  {
+    incoming_byte = USART_Rx(USART0);
+    if(incoming_byte != '\n')
+    {
+      buffer[buffer_index] = incoming_byte;
+      buffer_index++;
+    } else {
+      buffer[buffer_index] = '\0';
+      break;
+    }
+  }
+
+  int values_parsed = sscanf(buffer, "f%lu" "d%lu" "n%lu", &frequency, &duty_cycle, &n_pulses);
+  if (values_parsed == 3)
+  {
+    params[0] = frequency;
+    params[1] = duty_cycle;
+    params[2] = n_pulses;
+  }
 }
