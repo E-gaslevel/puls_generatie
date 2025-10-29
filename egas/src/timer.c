@@ -63,6 +63,8 @@ void EGAS_PWM_Start(uint32_t pwm_freq, uint8_t duty_cycle, uint8_t n_of_pulses)
   TIMER_CompareSet(TIMER0, 0, (topValue * duty_cycle) / 100);
 
   TIMER_TopSet(TIMER1, topValue * (n_of_pulses+1));
+  TIMER0->CNT = 0;
+  TIMER1->CNT = 0;
   TIMER1->CMD = TIMER_CMD_START;
 }
 
