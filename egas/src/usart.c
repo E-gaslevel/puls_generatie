@@ -58,7 +58,7 @@ void EGAS_UART_Send(uint16_t *_data, int size)
 // -----------------------------------------------------------------
 void EGAS_UART_Receive_Params(uint32_t* params)
 {
-  char buffer[32];
+  char buffer[100];
   uint8_t buffer_index = 0;
   char incoming_byte;
 
@@ -86,4 +86,6 @@ void EGAS_UART_Receive_Params(uint32_t* params)
     params[1] = duty_cycle;
     params[2] = n_pulses;
   }
+  else
+    {while(1);}
 }

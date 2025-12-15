@@ -24,7 +24,6 @@
 #include "app.h"
 
 uint16_t buffer[5000]; // gebruik buffer buiten stack
-uint32_t params[3];
 
 void app_init(void)
 {
@@ -34,11 +33,13 @@ void app_init(void)
   EGAS_PWM_Init();
   while(1)
   {
+    uint32_t params[3] = {100000, 75, 2};
     EGAS_UART_Receive_Params(params);
+
     EGAS_PWM_Start(params[0], params[1], params[2]);
     EGAS_ADC_Measure(buffer, sizeof(buffer) / sizeof(uint16_t));
     EGAS_UART_Send(buffer, sizeof(buffer) / sizeof(uint16_t));
-    for(int i = 0; i < 500000; i++);
+    for (int i = 0; i < 5000000; i++);
     }
 }
 
