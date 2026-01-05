@@ -22,6 +22,10 @@
 #include "gpio.h"
 #include "usart.h"
 #include "timer.h"
+#include "filter.h"
+#include "tof.h"
+#include "new_tof.h"
+
 
 /***************************************************************************//**
  * Initialize application.

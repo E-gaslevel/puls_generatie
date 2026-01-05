@@ -17,6 +17,8 @@
 
 void EGAS_UART_Init();
 void EGAS_UART_Send(uint16_t *_data, int size);
+void EGAS_UART_Send_Float (float _data, int size);
+void EGAS_UART_Receive (uint16_t *_data);
 void EGAS_UART_Receive_Params(uint32_t* params);
 
 #endif /* USART_H */
