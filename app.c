@@ -35,7 +35,7 @@ uint32_t params[3];
 uint16_t current_sample[MAX_DATA_POINTS];
 uint16_t peaks[MAX_PEAKS];
 uint16_t argsorted_peaks[MAX_PEAKS];
-float step = 1.078082192/2;
+float step = (1.078082192/2);
 
 void app_init(void)
 {
@@ -59,7 +59,7 @@ void app_init(void)
       }
 
       EGAS_SavGol_Filter(buffer);
-      float tof = find_tof(buffer, 0, step, N);
+      float tof = find_tof(buffer, 2000, step, N);
       EGAS_UART_Send_Float(tof, sizeof(float));
 
 //

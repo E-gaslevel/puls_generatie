@@ -9,27 +9,32 @@
 
 #include "new_tof.h"
 
+//#define offset 12.75
+#define offset 12.7025
 
-float find_tof (uint16_t *_data, int threshold, float step, int N)
+float
+find_tof (uint16_t *_data, int threshold, float step, int N)
 {
   uint32_t avg_value = 0;
-  for (int i = 0; i < N; i++){
+  for (int i = 0; i < N; i++)
+    {
       avg_value += _data[i];
-  }
+    }
   avg_value = avg_value / N;
   threshold += avg_value;
 
   int peaks[3];
-  int peak_count;
+  int peak_count = 0;
   int in_peak = 0;
   int peak_max = 0;
   int peak_index = 0;
 
   for (int i = 0; i < N; i++)
     {
-      if (peak_count == 3){
+      if (peak_count == 3)
+        {
           break;
-      }
+        }
       if (in_peak == 0 && _data[i] > threshold)
         {
           in_peak = 1;
@@ -38,7 +43,7 @@ float find_tof (uint16_t *_data, int threshold, float step, int N)
         }
       else if (in_peak && _data[i] > threshold)
         {
-          if (_data[i] > threshold)
+          if (_data[i] > peak_max)
             {
               peak_max = _data[i];
               peak_index = i;
@@ -46,12 +51,20 @@ float find_tof (uint16_t *_data, int threshold, float step, int N)
         }
       else if (in_peak && _data[i] <= threshold)
         {
-          peaks[peak_count] = (peak_index * step);
+          peaks[peak_count] = peak_index;
           in_peak = 0;
           peak_max = 0;
           peak_index = 0;
           peak_count++;
         }
     }
-  return (peaks[2] - peaks[1]) * step;
+  if (peak_count == 3)
+    {
+      return ((peaks[2] - peaks[1]) * step) - offset;
+    }
+  else
+    {
+      return 0;
+    }
+
 }

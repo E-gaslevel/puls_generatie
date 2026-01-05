@@ -54,15 +54,16 @@ void EGAS_UART_Send (uint16_t *_data, int size)
 
 void EGAS_UART_Send_Float(float _data, int size)
 {
-  char buffer[32];
-  snprintf(buffer, sizeof(buffer), "ToF is %f", _data);
-  for (int i = 0; i < size; i++){
-    while (!(USART0->STATUS & USART_STATUS_TXBL));  // wait for TX
-    USART_Tx (USART0, buffer[i]);
-  }
+    char buffer[256];
+    int len = snprintf(buffer, sizeof(buffer), "%f", _data);
 
-  while (!(USART0->STATUS & USART_STATUS_TXBL));
-  USART_Tx (USART0, '\n');
+    for (int i = 0; i < len; i++)
+    {
+        while (!(USART0->STATUS & USART_STATUS_TXBL));
+        USART_Tx(USART0, buffer[i]);
+    }
+    while (!(USART0->STATUS & USART_STATUS_TXBL));
+    USART_Tx(USART0, '\n');
 }
 
 void EGAS_UART_Receive (uint16_t *_data)
@@ -87,19 +88,19 @@ void EGAS_UART_Receive (uint16_t *_data)
           break;
         }
 
-      if (incoming_byte >= '0' && incoming_byte <= '9')
+      if (incoming_byte != '\n')
         {
           if (index_buffer < (sizeof(buffer) - 1))
             {
               buffer[index_buffer++] = incoming_byte;
             }
-          else if (incoming_byte == '\n')
-            {
-              buffer[index_buffer] = '\0';
-              _data[index_data] += atoi (buffer);
-              index_buffer = 0;
-              index_data++;
-            }
+        }
+      else
+        {
+          buffer[index_buffer] = '\0';
+          _data[index_data] += atoi (buffer);
+          index_buffer = 0;
+          index_data++;
         }
     }
 }
