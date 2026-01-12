@@ -29,7 +29,7 @@
 #define Ms 787
 
 uint32_t buffer[N]; // gebruik buffer buiten stack
-
+uint32_t temp_buf[N];
 
 void app_init(void)
 {
@@ -44,12 +44,15 @@ void app_init(void)
       }
       for (int i = 0; i < MAX_PULSES; i++){
           EGAS_PWM_Start(120000, 75, 5);
-          EGAS_ADC_Measure(buffer, sizeof(buffer) / sizeof(uint32_t));
+          EGAS_ADC_Measure(temp_buf, sizeof(temp_buf) / sizeof(uint32_t));
+          for (int i = 0; i < N; i++){
+              buffer[i] += temp_buf[i];
+          }
           for(int i = 0; i < 50000; i++);
       }
 
       EGAS_SavGol_Filter(buffer);
-      float tof_ms = (find_tof(buffer, 0.1, FS, N) * 1000);
+      float tof_ms = (find_tof(buffer, 0.2, FS, N) * 1000);
 //      float tof_with_offset = tof - OFFSET;
       float dis = tof_ms * Ms;
       float dis_with_offset = dis - OFFSET;
