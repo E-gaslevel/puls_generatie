@@ -53,7 +53,7 @@ void app_init(void)
 
       EGAS_SavGol_Filter(buffer);
       float tof_ms = (find_tof(buffer, 0.2, FS, N) * 1000);
-//      float tof_with_offset = tof - OFFSET;
+      float tof_us = tof_ms * 1000;
       float dis = tof_ms * Ms;
       float dis_with_offset = dis - OFFSET;
       EGAS_UART_Send(buffer, sizeof(buffer) / sizeof(uint32_t));
