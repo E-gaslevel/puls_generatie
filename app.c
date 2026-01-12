@@ -31,6 +31,16 @@
 uint32_t buffer[N]; // gebruik buffer buiten stack
 uint32_t temp_buf[N];
 
+int find_min_buffer(uint32_t* _data){
+  int lowest_value = 0;
+  for (int i = 0; i < N; i++){
+      if (_data[i] > lowest_value){
+          lowest_value = _data[i];
+      }
+  }
+  return lowest_value;
+}
+
 void app_init(void)
 {
   EGAS_GPIO_Init();
@@ -50,9 +60,12 @@ void app_init(void)
           }
           for(int i = 0; i < 50000; i++);
       }
+      int min = find_min_buffer(buffer);
+      float threshold = 1.04*min;
+
 
       EGAS_SavGol_Filter(buffer);
-      float tof_ms = (find_tof(buffer, 0.2, FS, N) * 1000);
+      float tof_ms = (find_tof(buffer, threshold, FS, N) * 1000);
       float tof_us = tof_ms * 1000;
       float dis = tof_ms * Ms;
       float dis_with_offset = dis - OFFSET;

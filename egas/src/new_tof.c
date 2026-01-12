@@ -12,17 +12,19 @@
 //#define offset 12.75
 //#define offset 12.7025
 
+
+
 float
 find_tof (uint32_t *_data, float threshold, float fs, int N)
 {
-  int avg_offset = 180;
-  uint32_t avg_value = 0;
-  for (int i = avg_offset; i < N; i++)
-    {
-      avg_value += _data[i];
-    }
-  avg_value = avg_value / (N - avg_offset);
-  threshold = (avg_value * (1+threshold));
+//  int avg_offset = 180;
+//  uint32_t avg_value = 0;
+//  for (int i = avg_offset; i < N; i++)
+//    {
+//      avg_value += _data[i];
+//    }
+//  avg_value = avg_value / (N - avg_offset);
+//  threshold = (avg_value * (1+threshold));
 
   int peaks[3];
   int peak_count = 0;
