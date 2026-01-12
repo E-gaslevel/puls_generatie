@@ -7,7 +7,7 @@
 
 #include "usart.h"
 
-const uint32_t BAUDRATE = 115200;
+const uint32_t BAUDRATE = 921600;
 
 // ----------------------------------------------------------------
 // UART is initialized as USART0 using PC8 and PC9
@@ -39,15 +39,15 @@ void EGAS_UART_Send(uint16_t *_data, int size)
 {
   char buffer[16];
   for (int i = 0; i < size; i++) {
-    int len = snprintf(buffer, sizeof(buffer), "%u,", _data[i]);
+    int len = snprintf(buffer, sizeof(buffer), "%u\n", _data[i]);
     for (int j = 0; j < len; j++) {
       while (!(USART0->STATUS & USART_STATUS_TXBL));  // wait for TX
       USART_Tx(USART0, buffer[j]);
     }
   }
 
-  while (!(USART0->STATUS & USART_STATUS_TXBL));
-  USART_Tx(USART0, '\n');
+//  while (!(USART0->STATUS & USART_STATUS_TXBL));
+//  USART_Tx(USART0, '\n');
 }
 
 // ----------------------------------------------------------------
