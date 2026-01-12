@@ -22,20 +22,14 @@
 #include <stdint.h>
 
 #include "app.h"
-#define MAX_PULSES 5
-#define MAX_DATA_POINTS 1200
-#define WINDOW 51
-#define MAX_PEAKS (MAX_DATA_POINTS/2)
-#define min_height 12000
-#define min_distance 92
+#define MAX_PULSES 30
 #define N 1200
+#define OFFSET 12.7025
+#define FS 730000
+#define Ms 787
 
-uint16_t buffer[MAX_DATA_POINTS]; // gebruik buffer buiten stack
-uint32_t params[3];
-uint16_t current_sample[MAX_DATA_POINTS];
-uint16_t peaks[MAX_PEAKS];
-uint16_t argsorted_peaks[MAX_PEAKS];
-float step = (1.078082192/2);
+uint32_t buffer[N]; // gebruik buffer buiten stack
+
 
 void app_init(void)
 {
@@ -45,29 +39,22 @@ void app_init(void)
   EGAS_PWM_Init();
   while(1)
   {
-//    EGAS_UART_Receive_Params(params);
-//    EGAS_PWM_Start(params[0], params[1], params[2]);
-//    EGAS_ADC_Measure(buffer, sizeof(buffer) / sizeof(uint16_t));
-//    EGAS_UART_Send(buffer, sizeof(buffer) / sizeof(uint16_t));
-
       for (int i = 0; i < sizeof(buffer); i++){
           buffer[i] = 0;
       }
-
       for (int i = 0; i < MAX_PULSES; i++){
-          EGAS_UART_Receive(buffer);
+          EGAS_PWM_Start(120000, 75, 5);
+          EGAS_ADC_Measure(buffer, sizeof(buffer) / sizeof(uint32_t));
+          for(int i = 0; i < 50000; i++);
       }
 
       EGAS_SavGol_Filter(buffer);
-      float tof = find_tof(buffer, 2000, step, N);
-      EGAS_UART_Send_Float(tof, sizeof(float));
+      float tof_ms = (find_tof(buffer, 0.1, FS, N) * 1000);
+//      float tof_with_offset = tof - OFFSET;
+      float dis = tof_ms * Ms;
+      float dis_with_offset = dis - OFFSET;
+      EGAS_UART_Send(buffer, sizeof(buffer) / sizeof(uint32_t));
 
-//
-//      local_maxima(buffer, MAX_DATA_POINTS, peaks, MAX_PEAKS);
-//      filter_height(buffer, MAX_DATA_POINTS, peaks, MAX_PEAKS, min_height);
-//      argsort(buffer, peaks, MAX_PEAKS, argsorted_peaks);
-//      filter_distance(buffer, MAX_DATA_POINTS, peaks, MAX_PEAKS, argsorted_peaks, min_distance);
-//      EGAS_UART_Send(buffer, sizeof(buffer)/sizeof(uint16_t));
       for(int i = 0; i < 500000; i++);
   }
 }

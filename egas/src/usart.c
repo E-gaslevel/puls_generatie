@@ -34,12 +34,12 @@ void EGAS_UART_Init ()
 // This functions send full array with UART. All values are parsed to char and sent
 // At the end, \n is send to let other program now that the data transfer is finished
 // -----------------------------------------------------------------
-void EGAS_UART_Send (uint16_t *_data, int size)
+void EGAS_UART_Send (uint32_t *_data, int size)
 {
   char buffer[16];
   for (int i = 0; i < size; i++)
     {
-      int len = snprintf (buffer, sizeof(buffer), "%u,", _data[i]);
+      int len = snprintf (buffer, sizeof(buffer), "%u\n", _data[i]);
       for (int j = 0; j < len; j++)
         {
           while (!(USART0->STATUS & USART_STATUS_TXBL));  // wait for TX

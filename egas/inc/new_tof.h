@@ -8,6 +8,6 @@
 #ifndef EGAS_INC_NEW_TOF_H_
 #define EGAS_INC_NEW_TOF_H_
 
-float find_tof(uint16_t* _data, int threshold, float step, int N);
+float find_tof(uint32_t* _data, float threshold, float step, int N);
 
 #endif /* EGAS_INC_NEW_TOF_H_ */

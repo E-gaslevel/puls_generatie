@@ -16,6 +16,6 @@
 #define ADC_CLK_FREQ 16000000UL
 
 void EGAS_ADC_Init(void);
-void EGAS_ADC_Measure(uint16_t *buffer, uint16_t size);
+void EGAS_ADC_Measure(uint32_t *buffer, uint32_t size);
 
 #endif /* INC_ADC_H_ */

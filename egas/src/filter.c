@@ -70,7 +70,7 @@ const double coeffs[WINDOW] = {
     -0.026637069922305474
 };
 
-void smooth_signal(uint16_t *x, int n, const double *c, const int window){
+void smooth_signal(uint32_t *x, int n, const double *c, const int window){
 
     int M = window / 2;
     int i, k;
@@ -87,7 +87,7 @@ void smooth_signal(uint16_t *x, int n, const double *c, const int window){
     }
 }
 
-void EGAS_SavGol_Filter(uint16_t *_data)
+void EGAS_SavGol_Filter(uint32_t *_data)
 {
   smooth_signal(_data, N, coeffs, WINDOW);
 }

@@ -41,12 +41,12 @@ void EGAS_ADC_Init(void) {
   ADC_Start(ADC0, adcStartSingle);
 }
 
-void EGAS_ADC_Measure(uint16_t *buffer, uint16_t size){
+void EGAS_ADC_Measure(uint32_t *buffer, uint32_t size){
 
     for (int i = 0; i < size; i++)
     {
         while ((ADC0->STATUS & ADC_STATUS_SINGLEDV) != ADC_STATUS_SINGLEDV);
-        buffer[i] = ADC_DataSingleGet(ADC0);// * 3440 / 4096;
+        buffer[i] += ADC_DataSingleGet(ADC0);// * 3440 / 4096;
     }
 
 }
