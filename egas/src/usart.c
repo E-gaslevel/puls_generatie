@@ -8,6 +8,7 @@
 #include "usart.h"
 #include <stdlib.h>
 
+// Match baudrate to UART baudrate
 const uint32_t BAUDRATE = 115200;
 
 // ----------------------------------------------------------------

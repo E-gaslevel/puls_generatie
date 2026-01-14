@@ -22,13 +22,13 @@
 #include <stdint.h>
 
 #include "app.h"
-#define MAX_PULSES 30
-#define N 1200
-#define OFFSET 12.7025
-#define FS 730000
-#define Ms 787
+#define MAX_PULSES 30 // Picked 30, because of (almost) no time restrictions can be any number
+#define N 1200 // Amount of values per sample
+#define OFFSET 12.7025 // Offset to compensate for tank thickness
+#define FS 730000 // Samplefrequency ADC on E-gaslevel, Page "x" of as-built
+#define Ms 787 // Speed of sound in gas should match temperature
 
-uint32_t buffer[N]; // gebruik buffer buiten stack
+uint32_t buffer[N];
 uint32_t temp_buf[N];
 
 int find_min_buffer(uint32_t* _data){

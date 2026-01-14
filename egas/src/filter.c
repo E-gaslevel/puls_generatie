@@ -11,11 +11,12 @@
 #include <math.h>
 
 #include "filter.h"
-#define N 1200
-#define WINDOW 51
+#define N 1200 // Amount of samples to be filtered
+#define WINDOW 51 // Window size for filtering
 
 
 // WINDOW = 51, poly = 2
+// Predefined co-efficients for SavGol filter, calculated with Python library
 const double coeffs[WINDOW] = {
     -0.026637069922305454,
     -0.021087680355158477,
