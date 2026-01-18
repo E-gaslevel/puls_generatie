@@ -24,9 +24,7 @@
 #include "app.h"
 #define MAX_PULSES 30 // Picked 30, because of (almost) no time restrictions can be any number
 #define N 1200 // Amount of values per sample
-#define OFFSET 12.7025 // Offset to compensate for tank thickness
 #define FS 730000 // Samplefrequency ADC on E-gaslevel, Page "x" of as-built
-#define MS 787 // Speed of sound in gas should match temperature
 #define INITIAL_PULSE_WIDTH 117 // Amount of samples take make up the initial pulse
 
 uint32_t buffer[N];
@@ -84,8 +82,6 @@ void app_process_action(void)
   EGAS_SavGol_Filter(buffer);
   float tof_ms = (find_tof(buffer, threshold, FS, N) * 1000);
   float tof_us = tof_ms * 1000;
-  float dis = tof_ms * MS;
-  float dis_with_offset = dis - OFFSET;
   EGAS_UART_Send(buffer, sizeof(buffer) / sizeof(uint32_t));
 
   for(int i = 0; i < 500000; i++);
