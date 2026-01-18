@@ -26,15 +26,26 @@
 #define N 1200 // Amount of values per sample
 #define OFFSET 12.7025 // Offset to compensate for tank thickness
 #define FS 730000 // Samplefrequency ADC on E-gaslevel, Page "x" of as-built
-#define Ms 787 // Speed of sound in gas should match temperature
+#define MS 787 // Speed of sound in gas should match temperature
+#define INITIAL_PULSE_WIDTH 117 // Amount of samples take make up the initial pulse
 
 uint32_t buffer[N];
 uint32_t temp_buf[N];
 
+int find_max_buffer(uint32_t* _data){
+  int highest_value = 0;
+  for (int i = INITIAL_PULSE_WIDTH; i < N; i++){
+      if (_data[i] > highest_value){
+          highest_value = _data[i];
+      }
+  }
+  return highest_value;
+}
+
 int find_min_buffer(uint32_t* _data){
-  int lowest_value = 0;
+  int lowest_value = _data[0];
   for (int i = 0; i < N; i++){
-      if (_data[i] > lowest_value){
+      if (_data[i] < lowest_value){
           lowest_value = _data[i];
       }
   }
@@ -47,32 +58,6 @@ void app_init(void)
   EGAS_ADC_Init();
   EGAS_UART_Init();
   EGAS_PWM_Init();
-  while(1)
-  {
-      for (int i = 0; i < sizeof(buffer); i++){
-          buffer[i] = 0;
-      }
-      for (int i = 0; i < MAX_PULSES; i++){
-          EGAS_PWM_Start(120000, 75, 5);
-          EGAS_ADC_Measure(temp_buf, sizeof(temp_buf) / sizeof(uint32_t));
-          for (int i = 0; i < N; i++){
-              buffer[i] += temp_buf[i];
-          }
-          for(int i = 0; i < 50000; i++);
-      }
-      int min = find_min_buffer(buffer);
-      float threshold = 1.04*min;
-
-
-      EGAS_SavGol_Filter(buffer);
-      float tof_ms = (find_tof(buffer, threshold, FS, N) * 1000);
-      float tof_us = tof_ms * 1000;
-      float dis = tof_ms * Ms;
-      float dis_with_offset = dis - OFFSET;
-      EGAS_UART_Send(buffer, sizeof(buffer) / sizeof(uint32_t));
-
-      for(int i = 0; i < 500000; i++);
-  }
 }
 
 /***************************************************************************//**
@@ -80,4 +65,28 @@ void app_init(void)
  ******************************************************************************/
 void app_process_action(void)
 {
+  for (int i = 0; i < sizeof(buffer); i++){
+      buffer[i] = 0;
+  }
+  for (int i = 0; i < MAX_PULSES; i++){
+      EGAS_PWM_Start(165000, 75, 6);
+      EGAS_ADC_Measure(temp_buf, sizeof(temp_buf) / sizeof(uint32_t));
+      for (int i = 0; i < N; i++){
+          buffer[i] += temp_buf[i];
+      }
+      for(int i = 0; i < 50000; i++);
+  }
+  int min = find_min_buffer(buffer);
+  int max = find_max_buffer(buffer);
+
+  float threshold = 0.05*max + min;
+
+  EGAS_SavGol_Filter(buffer);
+  float tof_ms = (find_tof(buffer, threshold, FS, N) * 1000);
+  float tof_us = tof_ms * 1000;
+  float dis = tof_ms * MS;
+  float dis_with_offset = dis - OFFSET;
+  EGAS_UART_Send(buffer, sizeof(buffer) / sizeof(uint32_t));
+
+  for(int i = 0; i < 500000; i++);
 }

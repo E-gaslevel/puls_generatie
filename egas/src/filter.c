@@ -11,9 +11,10 @@
 #include <math.h>
 
 #include "filter.h"
-#define N 1200 // Amount of samples to be filtered
 #define WINDOW 51 // Window size for filtering
+#define N 1200
 
+uint32_t out_buf[N]; // Temp buffer to prevent in-place modification
 
 // WINDOW = 51, poly = 2
 // Predefined co-efficients for SavGol filter, calculated with Python library
@@ -71,7 +72,7 @@ const double coeffs[WINDOW] = {
     -0.026637069922305474
 };
 
-void smooth_signal(uint32_t *x, int n, const double *c, const int window){
+void smooth_signal(const uint32_t *input_buf, uint32_t *output_buf, int n, const double *c, const int window){
 
     int M = window / 2;
     int i, k;
@@ -81,14 +82,18 @@ void smooth_signal(uint32_t *x, int n, const double *c, const int window){
         y = 0.0;
 
         for (k = -M; k <= M; k++) {
-            y += c[k + M] * x[i + k];
+            y += c[k + M] * input_buf[i + k];
         }
 
-        x[i] = y;
+        output_buf[i] = y;
     }
 }
 
 void EGAS_SavGol_Filter(uint32_t *_data)
 {
-  smooth_signal(_data, N, coeffs, WINDOW);
+
+  smooth_signal(_data, out_buf, N, coeffs, WINDOW);
+  for (int i = 0; i < N; i++){
+      _data[i] = out_buf[i];
+  }
 }
