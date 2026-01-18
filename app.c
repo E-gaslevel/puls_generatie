@@ -24,8 +24,8 @@
 #include "app.h"
 #define MAX_PULSES 30 // Picked 30, because of (almost) no time restrictions can be any number
 #define N 1200 // Amount of values per sample
-#define FS 730000 // Samplefrequency ADC on E-gaslevel, Page "x" of as-built
-#define INITIAL_PULSE_WIDTH 117 // Amount of samples take make up the initial pulse
+#define FS 730000 // Samplefrequency ADC on E-gaslevel, See Heading 4.2 of As-built
+#define INITIAL_PULSE_WIDTH 117 // Amount of samples take make up the initial pulse, See 5.4.3 of As-built
 
 uint32_t buffer[N];
 uint32_t temp_buf[N];
@@ -77,7 +77,7 @@ void app_process_action(void)
   int min = find_min_buffer(buffer);
   int max = find_max_buffer(buffer);
 
-  float threshold = 0.05*max + min;
+  float threshold = 0.05*max + min; // 0.05 Is 5% of maximum value, See 5.4.3 of As-built
 
   EGAS_SavGol_Filter(buffer);
   float tof_ms = (find_tof(buffer, threshold, FS, N) * 1000);
